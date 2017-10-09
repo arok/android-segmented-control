@@ -1,7 +1,6 @@
 package info.hoang8f.android.segmented;
 
 import android.content.Context;
-import android.content.res.ColorStateList;
 import android.content.res.Resources;
 import android.content.res.TypedArray;
 import android.graphics.Color;
@@ -15,7 +14,6 @@ import android.util.AttributeSet;
 import android.util.StateSet;
 import android.util.TypedValue;
 import android.view.View;
-import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
@@ -28,7 +26,6 @@ public class SegmentedGroup extends RadioGroup {
     private Resources resources;
     private int mTintColor;
     private int mUnCheckedTintColor;
-    private int mCheckedTextColor = Color.WHITE;
     private LayoutSelector mLayoutSelector;
     private Float mCornerRadius;
     private OnCheckedChangeListener mCheckedChangeListener;
@@ -76,10 +73,6 @@ public class SegmentedGroup extends RadioGroup {
                     R.styleable.SegmentedGroup_sc_tint_color,
                     getResources().getColor(R.color.radio_button_selected_color));
 
-            mCheckedTextColor = typedArray.getColor(
-                    R.styleable.SegmentedGroup_sc_checked_text_color,
-                    getResources().getColor(android.R.color.white));
-
             mUnCheckedTintColor = typedArray.getColor(
                     R.styleable.SegmentedGroup_sc_unchecked_tint_color,
                     getResources().getColor(R.color.radio_button_unselected_color));
@@ -102,7 +95,6 @@ public class SegmentedGroup extends RadioGroup {
 
     public void setTintColor(int tintColor, int checkedTextColor) {
         mTintColor = tintColor;
-        mCheckedTextColor = checkedTextColor;
         updateBackground();
     }
 
@@ -136,12 +128,6 @@ public class SegmentedGroup extends RadioGroup {
     private void updateBackground(View view) {
         int checked = mLayoutSelector.getSelected();
         int unchecked = mLayoutSelector.getUnselected();
-        //Set text color
-        ColorStateList colorStateList = new ColorStateList(new int[][]{
-                {-android.R.attr.state_checked},
-                {android.R.attr.state_checked}},
-                new int[]{mTintColor, mCheckedTextColor});
-        ((Button) view).setTextColor(colorStateList);
 
         //Redraw with tint color
         Drawable checkedDrawable = resources.getDrawable(checked).mutate();
