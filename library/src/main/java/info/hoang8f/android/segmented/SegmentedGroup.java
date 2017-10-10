@@ -152,6 +152,7 @@ public class SegmentedGroup extends RadioGroup {
         TransitionDrawable transitionDrawable = new TransitionDrawable(drawables);
         if (((RadioButton) view).isChecked()) {
             transitionDrawable.reverseTransition(0);
+            mLastCheckId = view.getId();
         }
 
         StateListDrawable stateListDrawable = new StateListDrawable();
