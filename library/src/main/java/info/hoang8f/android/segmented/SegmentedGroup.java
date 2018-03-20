@@ -126,7 +126,7 @@ public class SegmentedGroup extends RadioGroup {
     }
 
     private void updateBackground(View view) {
-        int checked = mLayoutSelector.getSelected();
+        final int checked = mLayoutSelector.getSelected();
         int unchecked = mLayoutSelector.getUnselected();
 
         //Redraw with tint color
@@ -171,11 +171,17 @@ public class SegmentedGroup extends RadioGroup {
         super.setOnCheckedChangeListener(new OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(RadioGroup group, int checkedId) {
-                TransitionDrawable current = mDrawableMap.get(checkedId);
-                current.reverseTransition(200);
+                if (checkedId != NO_ID) {
+                    TransitionDrawable current = mDrawableMap.get(checkedId);
+                    if (current != null) {
+                        current.reverseTransition(200);
+                    }
+                }
                 if (mLastCheckId != 0) {
                     TransitionDrawable last = mDrawableMap.get(mLastCheckId);
-                    if (last != null) last.reverseTransition(200);
+                    if (last != null) {
+                        last.reverseTransition(200);
+                    }
                 }
                 mLastCheckId = checkedId;
 
